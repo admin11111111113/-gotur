@@ -4,200 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Тут Море — Туры и экскурсии в Нячанге</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { --ocean:#006d8f; --ocean-dark:#004d6e; --sun:#ff8c42; --sand:#fff8f0; --dark:#0d2233; --gray:#6b8a9a; --light:#f0f6f9; --radius:16px; }
-body { font-family: Arial, sans-serif; background: var(--sand); color: var(--dark); line-height: 1.6; }
-
-/* ===== HERO ===== */
-.hero {
-  position: relative; height: 100vh; min-height: 600px;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  overflow: hidden;
-}
-.hero__bg {
-  position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=900&fit=crop') center/cover no-repeat;
-  transform: scale(1.05);
-  transition: transform 8s ease;
-}
-.hero__bg::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,20,40,.55) 0%, rgba(0,20,40,.4) 60%, rgba(13,34,51,.85) 100%);
-}
-.hero:hover .hero__bg { transform: scale(1); }
-.hero__content { position: relative; z-index: 2; max-width: 800px; padding: 20px; }
-.hero__logo { font-size: 13px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 20px; }
-.hero__title { font-size: clamp(48px,8vw,88px); font-weight: 900; color: #fff; line-height: 1; margin-bottom: 20px; letter-spacing: -2px; }
-.hero__title span { color: #ff8c42; }
-.hero__sub { font-size: 18px; color: rgba(255,255,255,.85); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
-.hero__cta { display: inline-block; background: var(--sun); color: #fff; font-size: 17px; font-weight: 700; padding: 16px 40px; border-radius: 50px; text-decoration: none; box-shadow: 0 8px 24px rgba(255,140,66,.45); transition: transform .2s; }
-.hero__cta:hover { transform: translateY(-3px); }
-.hero__stats { display: flex; justify-content: center; gap: 48px; margin-top: 44px; flex-wrap: wrap; }
-.hero__stat-num { font-size: 30px; font-weight: 900; color: #fff; }
-.hero__stat-label { font-size: 11px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: 1px; }
-.hero__waves { position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100'%3E%3Cpath fill='%23fff8f0' d='M0,50L60,55C120,60,240,70,360,65C480,60,600,40,720,35C840,30,960,40,1080,50C1200,60,1320,70,1380,75L1440,80L1440,100L0,100Z'/%3E%3C/svg%3E") no-repeat bottom; background-size: cover; z-index: 2; }
-
-/* ===== GALLERY ===== */
-.gallery-section { background: var(--dark); padding: 60px 16px; }
-.gallery-section__head { text-align: center; margin-bottom: 36px; }
-.gallery-section__label { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #ff8c42; margin-bottom: 10px; }
-.gallery-section__title { font-size: clamp(26px,4vw,40px); font-weight: 900; color: #fff; }
-.gallery-section__sub { color: rgba(255,255,255,.6); font-size: 15px; margin-top: 8px; }
-
-.mosaic { max-width: 1200px; margin: 0 auto; display: grid; gap: 10px; grid-template-columns: repeat(4,1fr); }
-.tile { position: relative; overflow: hidden; border-radius: 12px; cursor: pointer; background: #1a3344; }
-.tile:hover .tile__img { transform: scale(1.07); }
-.tile:hover .tile__overlay { opacity: 1; }
-.tile--big { grid-column: span 2; grid-row: span 2; }
-.tile--wide { grid-column: span 2; }
-.tile--tall { grid-row: span 2; }
-.tile__img { width: 100%; height: 100%; min-height: 170px; object-fit: cover; display: block; transition: transform .4s ease; }
-.tile--big .tile__img { min-height: 360px; }
-.tile--tall .tile__img { min-height: 340px; }
-.tile--wide .tile__img { min-height: 185px; }
-.tile__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.8) 0%, rgba(0,0,0,.15) 55%, transparent 100%); opacity: .55; transition: opacity .3s; display: flex; align-items: flex-end; padding: 16px; }
-.tile__name { color: #fff; font-size: 14px; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 6px rgba(0,0,0,.5); }
-.tile__name small { display: block; font-size: 11px; font-weight: 400; opacity: .8; margin-top: 2px; }
-.tile__num { position: absolute; top: 10px; left: 10px; background: #ff8c42; color: #fff; font-size: 11px; font-weight: 900; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-
-@media(max-width:700px) {
-  .mosaic { grid-template-columns: repeat(2,1fr); }
-  .tile--big { grid-column: span 2; grid-row: span 1; }
-  .tile--wide { grid-column: span 2; }
-  .tile--tall { grid-row: span 1; }
-  .tile--big .tile__img, .tile--tall .tile__img { min-height: 200px; }
-}
-
-/* ===== WHY ===== */
-.section { padding: 72px 20px; }
-.section--light { background: var(--light); }
-.section--white { background: #fff; }
-.section__head { text-align: center; max-width: 600px; margin: 0 auto 52px; }
-.section__label { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--ocean); margin-bottom: 10px; }
-.section__title { font-size: clamp(26px,4vw,40px); font-weight: 900; color: var(--dark); line-height: 1.2; }
-.section__desc { margin-top: 10px; color: var(--gray); font-size: 15px; }
-.why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
-@media(max-width:800px){ .why-grid { grid-template-columns: repeat(2,1fr); } }
-.why-card { background: #fff; border-radius: 14px; padding: 24px 18px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
-.why-card__icon { font-size: 34px; margin-bottom: 10px; }
-.why-card__title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 5px; }
-.why-card__text { font-size: 13px; color: var(--gray); line-height: 1.5; }
-
-/* ===== CONTACT ===== */
-.contact-block { background: linear-gradient(135deg,var(--ocean-dark),var(--ocean)); border-radius: 24px; padding: 52px 36px; text-align: center; max-width: 700px; margin: 0 auto; color: #fff; }
-.contact-block h2 { font-size: 30px; font-weight: 900; margin-bottom: 10px; }
-.contact-block p { color: rgba(255,255,255,.8); font-size: 15px; margin-bottom: 28px; }
-.contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.contact-btn { display: inline-flex; align-items: center; gap: 7px; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 700; text-decoration: none; transition: transform .2s; }
-.contact-btn:hover { transform: translateY(-2px); }
-.contact-btn--wa { background: #25D366; color: #fff; }
-.contact-btn--tg { background: #229ED9; color: #fff; }
-.contact-btn--ig { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
-.contact-btn--tt { background: #010101; color: #fff; }
-footer { background: var(--dark); color: rgba(255,255,255,.45); text-align: center; padding: 28px 20px; font-size: 12px; }
-footer strong { color: rgba(255,255,255,.75); }
-
-/* ===== MODAL ===== */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72); z-index: 1000; padding: 16px; overflow-y: auto; backdrop-filter: blur(4px); }
-.modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
-.modal { background: #fff; border-radius: 20px; width: 100%; max-width: 860px; overflow: hidden; position: relative; margin: auto; animation: mIn .3s ease; }
-@keyframes mIn { from{opacity:0;transform:scale(.95) translateY(16px)} to{opacity:1;transform:scale(1) translateY(0)} }
-.modal__close { position: absolute; top: 14px; right: 14px; z-index: 10; background: rgba(0,0,0,.4); color: #fff; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.modal__close:hover { background: rgba(0,0,0,.7); }
-.modal__gallery { position: relative; height: 300px; background: #000; }
-.modal__gallery-img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.modal__gallery-img.active { display: block; }
-.gal-prev, .gal-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.45); color: #fff; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.gal-prev { left: 10px; } .gal-next { right: 10px; }
-.gal-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
-.gal-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); cursor: pointer; }
-.gal-dot.active { background: #fff; }
-.gal-counter { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,.45); color: #fff; font-size: 11px; padding: 2px 9px; border-radius: 20px; }
-.modal__body { padding: 22px 24px 0; }
-.modal__tag { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--ocean); margin-bottom: 6px; }
-.modal__title { font-size: 20px; font-weight: 900; color: var(--dark); margin-bottom: 8px; line-height: 1.2; }
-.modal__meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12px; color: var(--gray); }
-.modal__includes { background: var(--light); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: var(--dark); line-height: 1.65; }
-.modal__includes strong { color: var(--ocean); display: block; margin-bottom: 3px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
-.modal__route { font-size: 13px; color: var(--gray); margin-bottom: 16px; line-height: 1.6; }
-.modal__calc { border-top: 1px solid #eee; padding: 18px 24px; }
-.modal__calc-title { font-size: 13px; font-weight: 800; color: var(--dark); margin-bottom: 12px; }
-.calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
-.calc-label { font-size: 13px; color: var(--dark); width: 110px; flex-shrink: 0; }
-.calc-label small { display: block; color: var(--gray); font-size: 11px; }
-.calc-controls { display: flex; align-items: center; gap: 8px; }
-.calc-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ocean); background: #fff; color: var(--ocean); font-size: 17px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all .15s; }
-.calc-btn:hover { background: var(--ocean); color: #fff; }
-.calc-num { font-size: 17px; font-weight: 800; min-width: 26px; text-align: center; }
-.calc-date-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
-.calc-date-label { font-size: 13px; color: var(--dark); width: 110px; flex-shrink: 0; }
-.calc-date-input { border: 2px solid #e0e8ed; border-radius: 10px; padding: 7px 11px; font-size: 13px; color: var(--dark); outline: none; transition: border-color .2s; }
-.calc-date-input:focus { border-color: var(--ocean); }
-.calc-total { background: linear-gradient(135deg,var(--ocean-dark),var(--ocean)); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-.calc-total-label { color: rgba(255,255,255,.8); font-size: 13px; }
-.calc-total-price { color: #fff; font-size: 24px; font-weight: 900; }
-.calc-total-price span { font-size: 12px; font-weight: 400; opacity: .7; margin-left: 3px; }
-.calc-breakdown { color: rgba(255,255,255,.6); font-size: 11px; margin-top: 2px; }
-.modal__book { padding: 16px 24px 22px; display: flex; gap: 10px; flex-wrap: wrap; }
-.book-btn { flex: 1; min-width: 130px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 18px; border-radius: 50px; font-size: 13px; font-weight: 700; text-decoration: none; transition: transform .2s, opacity .2s; border: none; cursor: pointer; }
-.book-btn:hover { transform: translateY(-2px); opacity: .9; }
-.book-btn--wa { background: #25D366; color: #fff; }
-.book-btn--tg { background: #229ED9; color: #fff; }
-.modal__social { padding: 0 24px 20px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.modal__social-label { font-size: 12px; color: var(--gray); }
-.social-link { display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none; opacity: .9; }
-.social-link:hover { opacity: 1; }
-.social-link--ig { background: linear-gradient(45deg,#f09433,#dc2743,#bc1888); color: #fff; }
-.social-link--tt { background: #010101; color: #fff; }
-
-/* LIGHTBOX */
-.lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.93); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-.lightbox.active { display: flex; }
-.lightbox__inner { position: relative; max-width: 920px; width: 100%; }
-.lightbox__img { width: 100%; border-radius: 10px; max-height: 78vh; object-fit: contain; }
-.lightbox__close { position: absolute; top: -38px; right: 0; background: none; border: none; color: #fff; font-size: 26px; cursor: pointer; }
-.lightbox__caption { text-align: center; margin-top: 14px; font-size: 16px; font-weight: 700; color: #fff; }
-.lightbox__sub { text-align: center; color: rgba(255,255,255,.55); font-size: 12px; margin-top: 3px; }
-.lightbox__nav { display: flex; justify-content: center; gap: 14px; margin-top: 16px; }
-.lb-btn { background: rgba(255,255,255,.15); border: none; color: #fff; padding: 9px 22px; border-radius: 25px; font-size: 20px; cursor: pointer; }
-.lb-btn:hover { background: rgba(255,255,255,.3); }
-
-@media(max-width:580px) {
-  .modal__body { padding: 16px 14px 0; }
-  .modal__calc, .modal__book, .modal__social { padding-left: 14px; padding-right: 14px; }
-  .modal__gallery { height: 220px; }
-}
-
-/* ===== TOURS MOSAIC ===== */
-.tours-mosaic { max-width: 1200px; margin: 0 auto; display: grid; gap: 10px; grid-template-columns: repeat(4,1fr); }
-.tour-tile { position: relative; overflow: hidden; border-radius: 12px; cursor: pointer; background: #1a3344; }
-.tour-tile:hover .tour-tile__img { transform: scale(1.07); }
-.tour-tile:hover .tour-tile__overlay { opacity: 1; }
-.tour-tile--big { grid-column: span 2; grid-row: span 2; }
-.tour-tile--wide { grid-column: span 2; }
-.tour-tile--tall { grid-row: span 2; }
-.tour-tile__img { width: 100%; height: 100%; min-height: 170px; object-fit: cover; display: block; transition: transform .4s ease; }
-.tour-tile--big .tour-tile__img { min-height: 360px; }
-.tour-tile--tall .tour-tile__img { min-height: 340px; }
-.tour-tile--wide .tour-tile__img { min-height: 185px; }
-.tour-tile__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.2) 55%, transparent 100%); opacity: .65; transition: opacity .3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; }
-.tour-tile__tag { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #ff8c42; margin-bottom: 4px; }
-.tour-tile__name { color: #fff; font-size: 14px; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 6px rgba(0,0,0,.5); margin-bottom: 4px; }
-.tour-tile--big .tour-tile__name { font-size: 18px; }
-.tour-tile__price { color: #ffcc88; font-size: 13px; font-weight: 700; }
-.tour-tile__badge { position: absolute; top: 10px; left: 10px; background: #ff8c42; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-.tour-tile__badge--hot { background: #ff4444; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
-@media(max-width:700px) {
-  .tours-mosaic { grid-template-columns: repeat(2,1fr); }
-  .tour-tile--big { grid-column: span 2; grid-row: span 1; }
-  .tour-tile--wide { grid-column: span 2; }
-  .tour-tile--tall { grid-row: span 1; }
-  .tour-tile--big .tour-tile__img { min-height: 200px; }
-}
-</style>
-
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -210,6 +16,137 @@ footer strong { color: rgba(255,255,255,.75); }
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/109765578" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ocean:#006d8f;--ocean-dark:#004d6e;--sun:#ff8c42;--dark:#0d2233;--gray:#6b8a9a;--light:#f0f6f9;--sand:#fff8f0}
+body{font-family:Arial,sans-serif;background:var(--dark);color:#fff;line-height:1.6}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:580px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero__bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=900&fit=crop') center/cover no-repeat}
+.hero__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,20,40,.6) 0%,rgba(13,34,51,.9) 100%)}
+.hero__content{position:relative;z-index:2;max-width:800px;padding:20px}
+.hero__logo{font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:16px}
+.hero__title{font-size:clamp(48px,8vw,88px);font-weight:900;color:#fff;line-height:1;margin-bottom:16px;letter-spacing:-2px}
+.hero__title span{color:#ff8c42}
+.hero__sub{font-size:17px;color:rgba(255,255,255,.8);margin-bottom:32px;max-width:460px;margin-left:auto;margin-right:auto}
+.hero__cta{display:inline-block;background:var(--sun);color:#fff;font-size:16px;font-weight:700;padding:15px 38px;border-radius:50px;text-decoration:none;box-shadow:0 8px 24px rgba(255,140,66,.4);transition:transform .2s}
+.hero__cta:hover{transform:translateY(-3px)}
+.hero__stats{display:flex;justify-content:center;gap:44px;margin-top:40px;flex-wrap:wrap}
+.hero__stat-num{font-size:28px;font-weight:900;color:#fff}
+.hero__stat-label{font-size:11px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:1px}
+.hero__waves{position:absolute;bottom:0;left:0;right:0;height:80px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80'%3E%3Cpath fill='%230d2233' d='M0,40L60,45C120,50,240,60,360,55C480,50,600,30,720,25C840,20,960,30,1080,40C1200,50,1320,60,1380,65L1440,70L1440,80L0,80Z'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover;z-index:2}
+
+/* MOSAIC SHARED */
+.mosaic-section{padding:0 16px 60px;background:var(--dark)}
+.mosaic-head{text-align:center;padding:60px 0 36px}
+.mosaic-head__label{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#ff8c42;margin-bottom:10px}
+.mosaic-head__title{font-size:clamp(26px,4vw,40px);font-weight:900;color:#fff}
+.mosaic-head__sub{color:rgba(255,255,255,.55);font-size:14px;margin-top:8px}
+
+.mosaic{max-width:1200px;margin:0 auto;display:grid;gap:10px;grid-template-columns:repeat(4,1fr)}
+.tile{position:relative;overflow:hidden;border-radius:12px;cursor:pointer;background:#1a3344}
+.tile:hover .tile__img{transform:scale(1.07)}
+.tile:hover .tile__overlay{opacity:1}
+.tile--big{grid-column:span 2;grid-row:span 2}
+.tile--wide{grid-column:span 2}
+.tile--tall{grid-row:span 2}
+.tile__img{width:100%;height:100%;min-height:170px;object-fit:cover;display:block;transition:transform .4s ease}
+.tile--big .tile__img{min-height:360px}
+.tile--tall .tile__img{min-height:340px}
+.tile--wide .tile__img{min-height:185px}
+.tile__overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.15) 55%,transparent 100%);opacity:.6;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+.tile__label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#ff8c42;margin-bottom:3px}
+.tile__name{color:#fff;font-size:14px;font-weight:800;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.5);margin-bottom:3px}
+.tile--big .tile__name{font-size:18px}
+.tile__price{color:#ffcc88;font-size:12px;font-weight:700}
+.tile__sub{color:rgba(255,255,255,.7);font-size:11px;margin-top:2px}
+.tile__badge{position:absolute;top:10px;left:10px;background:#ff8c42;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+.tile__badge--hot{background:#ff3333;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+
+@media(max-width:700px){
+  .mosaic{grid-template-columns:repeat(2,1fr)}
+  .tile--big{grid-column:span 2;grid-row:span 1}
+  .tile--wide{grid-column:span 2}
+  .tile--tall{grid-row:span 1}
+  .tile--big .tile__img,.tile--tall .tile__img{min-height:200px}
+}
+
+/* WHY */
+.why-section{background:var(--dark);padding:60px 20px}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:0 auto}
+@media(max-width:800px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+.why-card{background:rgba(255,255,255,.07);border-radius:14px;padding:24px 18px;text-align:center}
+.why-card__icon{font-size:32px;margin-bottom:10px}
+.why-card__title{font-size:14px;font-weight:800;color:#fff;margin-bottom:5px}
+.why-card__text{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+
+/* FOOTER */
+footer{background:#060f18;color:rgba(255,255,255,.4);text-align:center;padding:28px 20px;font-size:12px}
+footer strong{color:rgba(255,255,255,.7)}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;padding:16px;overflow-y:auto;backdrop-filter:blur(4px)}
+.modal-overlay.active{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:860px;overflow:hidden;position:relative;margin:auto;animation:mIn .3s ease;color:var(--dark)}
+@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal__close{position:absolute;top:14px;right:14px;z-index:10;background:rgba(0,0,0,.45);color:#fff;border:none;width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal__close:hover{background:rgba(0,0,0,.7)}
+
+/* Gallery */
+.modal__gallery{position:relative;height:300px;background:#000}
+.gal-img{width:100%;height:100%;object-fit:cover;display:none}
+.gal-img.active{display:block}
+.gal-prev,.gal-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gal-prev{left:10px}.gal-next{right:10px}
+.gal-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.gal-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);cursor:pointer}
+.gal-dot.active{background:#fff}
+.gal-counter{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;padding:2px 9px;border-radius:20px}
+
+/* Modal body */
+.modal__body{padding:20px 22px 0}
+.modal__tag{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ocean);margin-bottom:5px}
+.modal__title{font-size:20px;font-weight:900;color:var(--dark);margin-bottom:8px;line-height:1.2}
+.modal__meta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--gray)}
+.modal__includes{background:var(--light);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--dark);line-height:1.65}
+.modal__includes strong{color:var(--ocean);display:block;margin-bottom:3px;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.modal__route{font-size:13px;color:var(--gray);margin-bottom:14px;line-height:1.6}
+
+/* Calc */
+.modal__calc{border-top:1px solid #eee;padding:16px 22px}
+.modal__calc-title{font-size:13px;font-weight:800;color:var(--dark);margin-bottom:12px}
+.calc-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.calc-label{font-size:13px;color:var(--dark);width:110px;flex-shrink:0}
+.calc-label small{display:block;color:var(--gray);font-size:11px}
+.calc-controls{display:flex;align-items:center;gap:8px}
+.calc-btn{width:30px;height:30px;border-radius:50%;border:2px solid var(--ocean);background:#fff;color:var(--ocean);font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s}
+.calc-btn:hover{background:var(--ocean);color:#fff}
+.calc-num{font-size:17px;font-weight:800;min-width:26px;text-align:center}
+.calc-date-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.calc-date-label{font-size:13px;color:var(--dark);width:110px;flex-shrink:0}
+.calc-date-input{border:2px solid #e0e8ed;border-radius:10px;padding:7px 11px;font-size:13px;color:var(--dark);outline:none;transition:border-color .2s}
+.calc-date-input:focus{border-color:var(--ocean)}
+.calc-total{background:linear-gradient(135deg,var(--ocean-dark),var(--ocean));border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.calc-total-label{color:rgba(255,255,255,.8);font-size:13px}
+.calc-total-price{color:#fff;font-size:24px;font-weight:900}
+.calc-total-price span{font-size:12px;font-weight:400;opacity:.7;margin-left:3px}
+.calc-breakdown{color:rgba(255,255,255,.6);font-size:11px;margin-top:2px}
+
+/* Book */
+.modal__book{padding:14px 22px 20px;display:flex;gap:10px;flex-wrap:wrap}
+.book-btn{flex:1;min-width:130px;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 18px;border-radius:50px;font-size:14px;font-weight:700;text-decoration:none;transition:transform .2s;border:none;cursor:pointer}
+.book-btn:hover{transform:translateY(-2px)}
+.book-btn--tg{background:#229ED9;color:#fff}
+
+
+
+@media(max-width:580px){
+  .modal__body,.modal__calc,.modal__book{padding-left:14px;padding-right:14px}
+  .modal__gallery{height:220px}
+}
+</style>
 </head>
 <body>
 
@@ -230,79 +167,42 @@ footer strong { color: rgba(255,255,255,.75); }
   <div class="hero__waves"></div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery-section">
-  <div class="gallery-section__head">
-    <p class="gallery-section__label">Путеводитель</p>
-    <h2 class="gallery-section__title">15 мест Нячанга</h2>
-    <p class="gallery-section__sub">Нажмите на фото чтобы узнать подробнее</p>
-  </div>
-  <div class="mosaic">
-    <div class="tile tile--big" onclick="openLb(0)"><img class="tile__img" src="https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=800&h=600&fit=crop" alt="Башни По Нагар"><div class="tile__overlay"><div class="tile__name">Башни По Нагар<small>Древние чамские башни IX–XII вв.</small></div></div><div class="tile__num">1</div></div>
-    <div class="tile" onclick="openLb(1)"><img class="tile__img" src="https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=600&h=400&fit=crop" alt="Остров Мун"><div class="tile__overlay"><div class="tile__name">Остров Мун<small>Коралловый заповедник</small></div></div><div class="tile__num">2</div></div>
-    <div class="tile" onclick="openLb(2)"><img class="tile__img" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=400&fit=crop" alt="Грязевые ванны"><div class="tile__overlay"><div class="tile__name">Грязевые ванны<small>I-Resort · Tháp Bà</small></div></div><div class="tile__num">3</div></div>
-    <div class="tile tile--tall" onclick="openLb(3)"><img class="tile__img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&h=800&fit=crop" alt="Хон Там"><div class="tile__overlay"><div class="tile__name">Хон Там Резорт<small>Остров-курорт со спа</small></div></div><div class="tile__num">4</div></div>
-    <div class="tile tile--wide" onclick="openLb(4)"><img class="tile__img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop" alt="Пляж Нячанг"><div class="tile__overlay"><div class="tile__name">Пляж Нячанга<small>6 км белого песка в центре города</small></div></div><div class="tile__num">5</div></div>
-    <div class="tile" onclick="openLb(5)"><img class="tile__img" src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&h=400&fit=crop" alt="Хон Чонг"><div class="tile__overlay"><div class="tile__name">Хон Чонг<small>Гранитные скалы у моря</small></div></div><div class="tile__num">6</div></div>
-    <div class="tile" onclick="openLb(6)"><img class="tile__img" src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&h=400&fit=crop" alt="Мини-бич"><div class="tile__overlay"><div class="tile__name">Мини-бич<small>Уединённый островной пляж</small></div></div><div class="tile__num">7</div></div>
-    <div class="tile tile--big" onclick="openLb(7)"><img class="tile__img" src="https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&h=600&fit=crop" alt="Далат"><div class="tile__overlay"><div class="tile__name">Далат<small>Город вечной весны · 3 часа от Нячанга</small></div></div><div class="tile__num">8</div></div>
-    <div class="tile" onclick="openLb(8)"><img class="tile__img" src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop" alt="Курорт Хон Там"><div class="tile__overlay"><div class="tile__name">Курорт Хон Там<small>Бассейн, пляж Б и шоу</small></div></div><div class="tile__num">9</div></div>
-    <div class="tile" onclick="openLb(9)"><img class="tile__img" src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=600&h=400&fit=crop" alt="Залив Винь Хы"><div class="tile__overlay"><div class="tile__name">Залив Винь Хы<small>300 видов кораллов</small></div></div><div class="tile__num">10</div></div>
-    <div class="tile tile--wide" onclick="openLb(10)"><img class="tile__img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=400&fit=crop" alt="Пещера Хань Рай"><div class="tile__overlay"><div class="tile__name">Пещера Хань Рай<small>«Марс в океане»</small></div></div><div class="tile__num">11</div></div>
-    <div class="tile" onclick="openLb(11)"><img class="tile__img" src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=600&h=400&fit=crop" alt="Дайвинг"><div class="tile__overlay"><div class="tile__name">Дайвинг<small>Кораллы Хон Муна</small></div></div><div class="tile__num">12</div></div>
-    <div class="tile" onclick="openLb(12)"><img class="tile__img" src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&h=400&fit=crop" alt="Пастбище овец"><div class="tile__overlay"><div class="tile__name">Пастбище овец<small>Нинь Тхуан · виноградный край</small></div></div><div class="tile__num">13</div></div>
-    <div class="tile" onclick="openLb(13)"><img class="tile__img" src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&h=400&fit=crop" alt="Зьеп Сон"><div class="tile__overlay"><div class="tile__name">Остров Зьеп Сон<small>«Морской путь» при отливе</small></div></div><div class="tile__num">14</div></div>
-    <div class="tile" onclick="openLb(14)"><img class="tile__img" src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=600&h=400&fit=crop" alt="Снорклинг"><div class="tile__overlay"><div class="tile__name">Снорклинг<small>Цветные рыбки и морские звёзды</small></div></div><div class="tile__num">15</div></div>
-  </div>
-</section>
+
 
 <!-- WHY -->
-<section class="section section--white">
-  <div class="section__head">
-    <p class="section__label">Почему мы</p>
-    <h2 class="section__title">Всё включено, никаких сюрпризов</h2>
+<section class="why-section">
+  <div style="text-align:center;margin-bottom:32px">
+    <p style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#ff8c42;margin-bottom:10px">Почему мы</p>
+    <h2 style="font-size:clamp(24px,4vw,36px);font-weight:900;color:#fff">Всё включено, никаких сюрпризов</h2>
   </div>
   <div class="why-grid">
     <div class="why-card"><div class="why-card__icon">🇷🇺</div><div class="why-card__title">Гид на русском</div><div class="why-card__text">Встреча у отеля, сопровождение весь день</div></div>
     <div class="why-card"><div class="why-card__icon">🚗</div><div class="why-card__title">Трансфер включён</div><div class="why-card__text">Машина и катер в каждом туре</div></div>
     <div class="why-card"><div class="why-card__icon">🛡️</div><div class="why-card__title">Страховка</div><div class="why-card__text">Полная страховка на весь маршрут</div></div>
-    <div class="why-card"><div class="why-card__icon">💬</div><div class="why-card__title">Онлайн-бронь</div><div class="why-card__text">Ответим в WhatsApp за 5 минут</div></div>
+    <div class="why-card"><div class="why-card__icon">💬</div><div class="why-card__title">Онлайн-бронь</div><div class="why-card__text">Ответим в Telegram за 5 минут</div></div>
   </div>
 </section>
-
 
 <!-- TOURS MOSAIC -->
-<section class="section section--light" id="tours">
-  <div class="section__head">
-    <p class="section__label">Каталог туров</p>
-    <h2 class="section__title">20 маршрутов</h2>
-    <p class="section__desc">Нажмите на тур — фото, программа, расчёт стоимости и связь</p>
+<section class="mosaic-section" id="tours">
+  <div class="mosaic-head">
+    <p class="mosaic-head__label">Каталог туров</p>
+    <h2 class="mosaic-head__title">20 маршрутов</h2>
+    <p class="mosaic-head__sub">Нажмите на тур — фото, программа, расчёт стоимости и Telegram</p>
   </div>
-  <div class="tours-mosaic" id="toursMosaic"></div>
-</section>
-
-
-<!-- CONTACT -->
-<section class="section section--white" id="contact">
-  <div class="contact-block">
-    <h2>Забронировать тур</h2>
-    <p>Ответим за 5 минут. Встреча у вашего отеля, оплата на месте.</p>
-    <div class="contact-btns">
-      <a class="contact-btn contact-btn--tg" href="https://t.me/tutmoreru">✈️ Telegram</a>
-      </div>
-  </div>
+  <div class="mosaic" id="toursMosaic"></div>
 </section>
 
 <footer>
   <strong>tut-more.ru</strong> · Туры и экскурсии в Нячанге · Вьетнам<br>
-  <span style="font-size:11px;opacity:.5;margin-top:4px;display:block">Все цены в донгах VND · Для детей скидки</span>
+  <span style="font-size:11px;opacity:.5;margin-top:4px;display:block">Все цены в донгах VND · Для детей скидки · <a href="https://t.me/tutmoreru" style="color:#229ED9;text-decoration:none">✈️ Telegram</a></span>
 </footer>
 
 <!-- TOUR MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal">
+  <div class="modal">
     <button class="modal__close" onclick="closeModal()">✕</button>
-    <div class="modal__gallery" id="modalGallery">
+    <div class="modal__gallery">
       <div class="gal-counter"><span id="galIdx">1</span>/<span id="galTotal">1</span></div>
       <div id="galImgs"></div>
       <button class="gal-prev" onclick="galMove(-1)">‹</button>
@@ -324,106 +224,68 @@ footer strong { color: rgba(255,255,255,.75); }
       <div class="calc-total"><div><div class="calc-total-label">Итого</div><div class="calc-breakdown" id="calcBreakdown"></div></div><div class="calc-total-price" id="calcTotal">0 <span>VND</span></div></div>
     </div>
     <div class="modal__book">
-      <a class="book-btn book-btn--tg" id="bookTg" href="#" target="_blank">✈️ Telegram</a>
+      <a class="book-btn book-btn--tg" id="bookTg" href="https://t.me/tutmoreru" target="_blank">✈️ Написать в Telegram</a>
     </div>
-    <div class="modal__social">
-      </div>
   </div>
 </div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLbOut(event)">
-  <div class="lightbox__inner">
-    <button class="lightbox__close" onclick="closeLb()">✕</button>
-    <img class="lightbox__img" id="lbImg" src="" alt="">
-    <div class="lightbox__caption" id="lbCap"></div>
-    <div class="lightbox__sub" id="lbSub"></div>
-    <div class="lightbox__nav">
-      <button class="lb-btn" onclick="lbMove(-1)">‹</button>
-      <button class="lb-btn" onclick="lbMove(1)">›</button>
-    </div>
+
   </div>
 </div>
 
 <script>
-const WA='', TG='gotur_nha_trang';
+const TG='tutmoreru';
 function fmt(n){return n.toLocaleString('ru-RU');}
 
-// ===== GALLERY DATA =====
-const places=[
-  {src:'https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=1200&h=800&fit=crop',name:'Башни По Нагар',sub:'Древние чамские башни IX–XII вв. — главный исторический символ Нячанга'},
-  {src:'https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=1200&h=800&fit=crop',name:'Остров Мун',sub:'Морской заповедник с уникальными коралловыми рифами — лучшее место для снорклинга'},
-  {src:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&h=800&fit=crop',name:'Грязевые ванны',sub:'Горячие минеральные грязевые ванны — оздоровление и незабываемый опыт'},
-  {src:'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&h=800&fit=crop',name:'Хон Там Резорт',sub:'Остров-курорт с тремя пляжами, бассейном, спа и шведским столом'},
-  {src:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=800&fit=crop',name:'Пляж Нячанга',sub:'6 км белоснежного пляжа прямо в центре города — один из лучших городских пляжей Азии'},
-  {src:'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1200&h=800&fit=crop',name:'Хон Чонг',sub:'Гигантские гранитные скалы у моря — идеальное место для фотографий на закате'},
-  {src:'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200&h=800&fit=crop',name:'Мини-бич',sub:'Уединённый островной пляж с бирюзовой водой и белым песком — без толп туристов'},
-  {src:'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=1200&h=800&fit=crop',name:'Далат',sub:'«Город вечной весны» — водопады, горы, дворцы и знаменитый Сумасшедший дом'},
-  {src:'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&h=800&fit=crop',name:'Курорт Хон Там — Пляж Б',sub:'Тихий пляж с шезлонгами и живым музыкальным шоу'},
-  {src:'https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=1200&h=800&fit=crop',name:'Залив Винь Хы',sub:'Нетронутый залив с 300 видами кораллов — прогулка на стеклодонной лодке'},
-  {src:'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1200&h=800&fit=crop',name:'Пещера Хань Рай',sub:'«Марс в океане» — тысячелетние кораллы уникальных форм и расцветок'},
-  {src:'https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=1200&h=800&fit=crop',name:'Дайвинг у Хон Муна',sub:'Погружение с аквалангом среди ярких коралловых рифов с инструктором'},
-  {src:'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&h=800&fit=crop',name:'Пастбище овец',sub:'Провинция Нинь Тхуан — белые овечки, виноградники и нетронутая природа'},
-  {src:'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1200&h=800&fit=crop',name:'Остров Зьеп Сон',sub:'Уникальный «морской путь» — при отливе можно пройти по воде посреди моря'},
-  {src:'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1200&h=800&fit=crop',name:'Снорклинг',sub:'Цветные рыбки, морские ежи и звёзды — всё снаряжение предоставляется'},
-];
-let lbIdx=0;
-function openLb(i){lbIdx=i;updLb();document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden';}
-function closeLb(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow='';}
-function closeLbOut(e){if(e.target===document.getElementById('lightbox'))closeLb();}
-function lbMove(d){lbIdx=(lbIdx+d+places.length)%places.length;updLb();}
-function updLb(){const p=places[lbIdx];document.getElementById('lbImg').src=p.src;document.getElementById('lbCap').textContent=p.name;document.getElementById('lbSub').textContent=p.sub;}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb();closeModal();}if(e.key==='ArrowLeft')lbMove(-1);if(e.key==='ArrowRight')lbMove(1);});
 
-// ===== TOURS DATA =====
+// TOURS DATA - по популярности
 const tours=[
-  {id:1,hot:false,tag:'🤿 3 острова',name:'3 острова + Снорклинг на скоростном катере',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:600000,childPrice:420000,includes:'Гид, трансфер, обед, вода, входные билеты, страховка, маска и трубка для снорклинга',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Пляж Сой.',photos:['https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
-  {id:2,hot:false,tag:'⭐ VIP · 3 острова',name:'VIP 3 острова + Снорклинг (Остров Там)',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:623000,includes:'Гид, современный транспорт, катер, обед, вода, страховка, билет на Хон Там',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Остров Там. Грязевые ванны или пляж с шезлонгами.',photos:['https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
-  {id:8,hot:false,tag:'🛁 Хон Там · Спа',name:'Остров Там — Грязевые ванны + Пляж А',time:'08:00–15:00',transport:'Машина + скоростной катер',adultPrice:970000,childPrice:695000,includes:'Гид, транспорт, катер, билет на грязевые ванны, вход на пляж А, шведский стол, вода, страховка',route:'<strong>Маршрут:</strong> Горячие минеральные ванны + бассейн + пляж А + шведский стол на Хон Там.',photos:['https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop']},
-  {id:16,hot:false,tag:'🌸 Далат',name:'Далат — Однодневный тур',time:'06:00–17:30',transport:'Туристический автомобиль',adultPrice:890000,childPrice:600000,includes:'Гид, транспорт, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Скульптурный тоннель → Водопад Датанла → Дворец Бао Дай III → Сумасшедший дом → Пагода Линь Пыок.',photos:['https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1509233725247-49e657c54213?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop']},
-  {id:3,hot:false,tag:'🏝️ 3 острова',name:'3 острова — Остров Мун',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:650000,childPrice:455000,includes:'Гид, транспорт, катер, обед, вода, входные билеты, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Пляж Чань. Морской заповедник с коралловыми рифами.',photos:['https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
-  {id:0,hot:true,tag:'🛥️ Морская прогулка',name:'Прогулка на двухэтажной лодке · 13 июня',time:'5 часов',transport:'Двухэтажная лодка',adultPrice:1000000,childPrice:800000,includes:'Снорклинг · Сап-борды · Рыбалка (удочки и снасти) · Мясо на гриле · Свежие фрукты · Ром, пиво, безалкогольные напитки безлимит · Гитара и музыка',route:'<strong>Маршрут:</strong> Бухты южных островов — Хон Мот, Хон Там, Хон Мун. Лучшие места с чистой прозрачной водой.',photos:['https://images.unsplash.com/photo-1565073624497-7144969b3a72?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=860&h=480&fit=crop']},
-  {id:4,hot:false,tag:'🌊 Остров Мун Делюкс',name:'Остров Мун Делюкс + Мини-бич',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:700000,childPrice:450000,includes:'Гид, транспорт, катер, шезлонг на Мини-биче, снаряжение для снорклинга, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Мини-бич.',photos:['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop']},
-  {id:5,hot:false,tag:'⭐ VIP · Остров Мун',name:'VIP Остров Мун + Остров Там',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:700000,includes:'Гид, VIP транспорт, катер, билет на Хон Там, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Остров Там.',photos:['https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop']},
-  {id:6,hot:false,tag:'🏖️ Мини-бич Делюкс',name:'Мини-бич Делюкс + Снорклинг',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:600000,childPrice:300000,includes:'Гид, транспорт, катер, снаряжение для снорклинга, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Мини-бич.',photos:['https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
-  {id:7,hot:false,tag:'⭐ VIP · Мини-бич',name:'VIP Мини-бич + Остров Там',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:650000,includes:'Гид, VIP транспорт, катер, билет на Хон Там, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мини-бич → Рыбацкая деревня (обед) → Хон Там Резорт.',photos:['https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop']},
-  {id:11,hot:false,tag:'🤿 Скуба Дайвинг',name:'Скуба Дайвинг — Погружение с аквалангом',time:'07:30–13:30',transport:'Машина + скоростной катер',adultPrice:950000,childPrice:950000,includes:'Гид, транспорт, катер, профессиональное снаряжение, обед, вода, страховка',route:'<strong>Маршрут:</strong> Коралловый риф → Рыбацкая деревня (обед). Погружение 10–15 мин. среди ярких рифов.',photos:['https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=860&h=480&fit=crop']},
-  {id:10,hot:false,tag:'🪖 Си-Волкинг',name:'Си-Волкинг — Прогулка по дну моря',time:'08:00–13:30',transport:'Машина + скоростной катер',adultPrice:1200000,childPrice:1200000,includes:'Гид, транспорт, катер, шлем для морской прогулки, погружение, обед, вода, страховка',route:'<strong>Маршрут:</strong> Коралловый риф → Рыбацкая деревня (обед). Прогулка по дну в шлеме — не нужно уметь плавать!',photos:['https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
-  {id:15,hot:false,tag:'🏛️ Сити Тур',name:'Сити Тур Нячанг',time:'09:00–15:00',transport:'Туристический автобус',adultPrice:650000,childPrice:375000,includes:'Гид, автобус, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Океанариум → Пагода Лонг Шон → Каменная церковь → Театр До → Хон Чонг → Башни Понагар.',photos:['https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop']},
-  {id:13,hot:false,tag:'🌿 Тур Хань Рай',name:'Тур Хань Рай — Пещера Рай + Залив Винь Хы',time:'08:00–16:00',transport:'Машина + катер',adultPrice:650000,childPrice:455000,includes:'Гид, транспорт, катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пастбище овец → Залив Винь Хы (стеклодонная лодка) → Пещера Хань Рай → Виноградный сад.',photos:['https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop']},
-  {id:14,hot:false,tag:'🌊 Остров Зьеп Сон',name:'Остров Зьеп Сон + Пляж Зок Лет',time:'07:00–16:30',transport:'Машина + скоростной катер',adultPrice:750000,childPrice:525000,includes:'Гид, транспорт, катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Зьеп Сон (морской путь при отливе) → Пляж Зок Лет.',photos:['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
-  {id:17,hot:false,tag:'🏖️ Мини-бич',name:'Мини-бич — Однодневный тур',time:'08:00–15:30',transport:'Машина + скоростной катер · мин. 4 чел.',adultPrice:700000,childPrice:500000,includes:'Гид, транспорт, катер, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мини-бич (мин. 4 человека). Уединённый пляж с кристально чистой водой. Обед с морепродуктами.',photos:['https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop']},
-  {id:18,hot:false,tag:'🐑 Пастбище + Залив',name:'Пастбище овец + Залив Винь Хы + Виноград',time:'08:00–16:30',transport:'Машина + катер',adultPrice:840000,childPrice:590000,includes:'Гид, транспорт, стеклодонный катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пастбище овец Сюй Тьен → Залив Винь Хы (300 видов кораллов) → Обед → Виноградный сад.',photos:['https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop']},
-  {id:19,hot:false,tag:'🚢 Залив Винь Хы',name:'Залив Винь Хы — Стеклодонная лодка',time:'08:00–16:30',transport:'Машина + стеклодонный катер',adultPrice:750000,childPrice:525000,includes:'Гид, транспорт, стеклодонный катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мыс Дельфина → Остров Черепахи → Обед → Виноградный сад. 200+ видов кораллов.',photos:['https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop']},
-  {id:9,hot:false,tag:'🎵 Хон Там · Шоу',name:'Остров Там — Пляж Б + Шоу + Обед',time:'08:00–15:00',transport:'Машина + скоростной катер',adultPrice:930000,childPrice:650000,includes:'Гид, транспорт, катер, вход на пляж Б, шоу, шведский стол, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Б + живое музыкальное и танцевальное шоу + праздничный шведский стол.',photos:['https://images.unsplash.com/photo-1501440267-4506e04e5e7f?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=860&h=480&fit=crop']},
-  {id:12,hot:false,tag:'🤿 3 острова + Дайвинг',name:'3 острова + Скуба Дайвинг',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:950000,childPrice:665000,includes:'Гид, транспорт, катер, снаряжение для дайвинга, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Пляж Сой + дайвинг с инструктором.',photos:['https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
+  {id:1,hot:false,tag:'🤿 3 острова',name:'3 острова + Снорклинг на катере',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:600000,childPrice:420000,includes:'Гид, трансфер, обед, вода, входные билеты, страховка, маска и трубка для снорклинга',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Пляж Сой.',photos:['https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
+  {id:2,hot:false,tag:'⭐ VIP · 3 острова',name:'VIP 3 острова + Хон Там',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:623000,includes:'Гид, VIP транспорт, катер, обед, вода, страховка, билет на Хон Там',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Остров Там. Грязевые ванны или пляж.',photos:['https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
+  {id:8,hot:false,tag:'🛁 Хон Там · Спа',name:'Хон Там — Грязевые ванны + Пляж А',time:'08:00–15:00',transport:'Машина + скоростной катер',adultPrice:970000,childPrice:695000,includes:'Гид, транспорт, катер, билет на ванны, вход на пляж А, шведский стол, вода, страховка',route:'<strong>Маршрут:</strong> Горячие минеральные ванны + бассейн + пляж А + шведский стол.',photos:['https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop']},
+  {id:16,hot:false,tag:'🌸 Далат',name:'Далат — Однодневный тур',time:'06:00–17:30',transport:'Туристический автомобиль',adultPrice:890000,childPrice:600000,includes:'Гид, транспорт, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Водопад Датанла → Дворец Бао Дай III → Сумасшедший дом → Пагода Линь Пыок.',photos:['https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1509233725247-49e657c54213?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop']},
+  {id:3,hot:false,tag:'🏝️ Заповедник',name:'3 острова — Остров Мун',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:650000,childPrice:455000,includes:'Гид, транспорт, катер, обед, вода, входные билеты, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Пляж Чань.',photos:['https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
+  {id:0,hot:true,tag:'🛥️ Морская прогулка',name:'Прогулка на двухэтажной лодке · 13 июня',time:'5 часов',transport:'Двухэтажная лодка',adultPrice:1000000,childPrice:800000,includes:'Снорклинг · Сап-борды · Рыбалка · Мясо на гриле · Фрукты · Ром, пиво, напитки безлимит · Гитара',route:'<strong>Маршрут:</strong> Бухты южных островов — Хон Мот, Хон Там, Хон Мун.',photos:['https://images.unsplash.com/photo-1565073624497-7144969b3a72?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=860&h=480&fit=crop']},
+  {id:4,hot:false,tag:'🌊 Мун Делюкс',name:'Остров Мун Делюкс + Мини-бич',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:700000,childPrice:450000,includes:'Гид, транспорт, катер, шезлонг, снаряжение для снорклинга, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Мини-бич.',photos:['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop']},
+  {id:5,hot:false,tag:'⭐ VIP · Мун',name:'VIP Остров Мун + Хон Там',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:700000,includes:'Гид, VIP транспорт, катер, билет на Хон Там, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Мун → Рыбацкая деревня (обед) → Хон Там.',photos:['https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop']},
+  {id:6,hot:false,tag:'🏖️ Мини-бич',name:'Мини-бич Делюкс + Снорклинг',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:600000,childPrice:300000,includes:'Гид, транспорт, катер, снаряжение для снорклинга, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Мини-бич.',photos:['https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
+  {id:7,hot:false,tag:'⭐ VIP · Мини-бич',name:'VIP Мини-бич + Хон Там',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:890000,childPrice:650000,includes:'Гид, VIP транспорт, катер, билет на Хон Там, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мини-бич → Рыбацкая деревня (обед) → Хон Там Резорт.',photos:['https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=860&h=480&fit=crop']},
+  {id:11,hot:false,tag:'🤿 Дайвинг',name:'Скуба Дайвинг — Погружение',time:'07:30–13:30',transport:'Машина + скоростной катер',adultPrice:950000,childPrice:950000,includes:'Гид, транспорт, катер, профессиональное снаряжение, обед, вода, страховка',route:'<strong>Маршрут:</strong> Коралловый риф → Рыбацкая деревня (обед). Погружение 10–15 мин.',photos:['https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=860&h=480&fit=crop']},
+  {id:10,hot:false,tag:'🪖 Си-Волкинг',name:'Си-Волкинг — Прогулка по дну моря',time:'08:00–13:30',transport:'Машина + скоростной катер',adultPrice:1200000,childPrice:1200000,includes:'Гид, транспорт, катер, шлем, погружение, обед, вода, страховка',route:'<strong>Маршрут:</strong> Коралловый риф → Рыбацкая деревня (обед). Прогулка по дну в шлеме!',photos:['https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
+  {id:15,hot:false,tag:'🏛️ Сити Тур',name:'Сити Тур Нячанг',time:'09:00–15:00',transport:'Туристический автобус',adultPrice:650000,childPrice:375000,includes:'Гид, автобус, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Океанариум → Пагода Лонг Шон → Хон Чонг → Башни Понагар.',photos:['https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=860&h=480&fit=crop']},
+  {id:13,hot:false,tag:'🌿 Хань Рай',name:'Тур Хань Рай — Пещера + Залив Винь Хы',time:'08:00–16:00',transport:'Машина + катер',adultPrice:650000,childPrice:455000,includes:'Гид, транспорт, катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пастбище овец → Залив Винь Хы → Пещера Хань Рай → Виноград.',photos:['https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop']},
+  {id:14,hot:false,tag:'🌊 Зьеп Сон',name:'Остров Зьеп Сон + Пляж Зок Лет',time:'07:00–16:30',transport:'Машина + скоростной катер',adultPrice:750000,childPrice:525000,includes:'Гид, транспорт, катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Остров Зьеп Сон (морской путь при отливе) → Пляж Зок Лет.',photos:['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop']},
+  {id:17,hot:false,tag:'🏖️ Мини-бич',name:'Мини-бич — Однодневный тур',time:'08:00–15:30',transport:'Машина + катер · мин. 4 чел.',adultPrice:700000,childPrice:500000,includes:'Гид, транспорт, катер, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мини-бич — уединённый пляж с кристально чистой водой.',photos:['https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1519046904884-53103b34b206?w=860&h=480&fit=crop']},
+  {id:18,hot:false,tag:'🐑 Пастбище',name:'Пастбище овец + Залив Винь Хы',time:'08:00–16:30',transport:'Машина + катер',adultPrice:840000,childPrice:590000,includes:'Гид, транспорт, стеклодонный катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пастбище овец → Залив Винь Хы (300 видов кораллов) → Виноградный сад.',photos:['https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop']},
+  {id:19,hot:false,tag:'🚢 Залив Винь Хы',name:'Залив Винь Хы — Стеклодонная лодка',time:'08:00–16:30',transport:'Машина + стеклодонный катер',adultPrice:750000,childPrice:525000,includes:'Гид, транспорт, катер, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Мыс Дельфина → Остров Черепахи → Обед → Виноградный сад.',photos:['https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1501854140801-50d01698950b?w=860&h=480&fit=crop']},
+  {id:9,hot:false,tag:'🎵 Хон Там · Шоу',name:'Хон Там — Пляж Б + Шоу + Обед',time:'08:00–15:00',transport:'Машина + скоростной катер',adultPrice:930000,childPrice:650000,includes:'Гид, транспорт, катер, вход на пляж Б, шоу, шведский стол, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Б + живое музыкальное шоу + шведский стол.',photos:['https://images.unsplash.com/photo-1501440267-4506e04e5e7f?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=860&h=480&fit=crop']},
+  {id:12,hot:false,tag:'🤿 3 острова + Дайвинг',name:'3 острова + Скуба Дайвинг',time:'08:00–15:30',transport:'Машина + скоростной катер',adultPrice:950000,childPrice:665000,includes:'Гид, транспорт, катер, снаряжение для дайвинга, входные билеты, обед, вода, страховка',route:'<strong>Маршрут:</strong> Пляж Чань → Рыбацкая деревня (обед) → Пляж Сой + дайвинг.',photos:['https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=860&h=480&fit=crop','https://images.unsplash.com/photo-1596458668893-3d0ef49c4b07?w=860&h=480&fit=crop']},
 ];
 
-// ===== RENDER CARDS =====
+// Паттерны мозаики
+const patterns=['big','tall','normal','normal','wide','normal','normal','big','normal','normal','wide','normal','normal','tall','normal','wide','normal','normal','normal','normal'];
 
-function renderCards(){
-  const patterns = ['big','tall','normal','normal','wide','normal','normal','big','normal','normal','wide','normal','normal','tall','normal','wide','normal','normal','normal','normal'];
-  document.getElementById('toursMosaic').innerHTML = tours.map((t,i) => {
-    const pattern = patterns[i] || 'normal';
-    const cls = pattern !== 'normal' ? 'tour-tile--' + pattern : '';
-    return `<div class="tour-tile ${cls}" onclick="openModal(${t.id})">
-      <img class="tour-tile__img" src="${t.photos[0]}" alt="${t.name}" loading="lazy">
-      <div class="tour-tile__overlay">
-        <div class="tour-tile__tag">${t.tag}</div>
-        <div class="tour-tile__name">${t.name}</div>
-        <div class="tour-tile__price">от ${fmt(t.adultPrice)} VND</div>
+function renderTours(){
+  document.getElementById('toursMosaic').innerHTML=tours.map((t,i)=>{
+    const p=patterns[i]||'normal';
+    const cls=p!=='normal'?'tile--'+p:'';
+    return `<div class="tile ${cls}" onclick="openModal(${t.id})">
+      <img class="tile__img" src="${t.photos[0]}" alt="${t.name}" loading="lazy">
+      <div class="tile__overlay">
+        <div class="tile__label">${t.tag}</div>
+        <div class="tile__name">${t.name}</div>
+        <div class="tile__price">от ${fmt(t.adultPrice)} VND</div>
       </div>
-      ${t.hot ? '<div class="tour-tile__badge tour-tile__badge--hot">🔥 Ближайший</div>' : ''}
+      ${t.hot?'<div class="tile__badge tile__badge--hot">🔥 13 июня</div>':''}
     </div>`;
   }).join('');
 }
 
-
-// ===== MODAL =====
-let curTour=null, galIdx=0;
+// MODAL
+let curTour=null,galIdx=0;
 function openModal(id){
-  const t=tours.find(x=>x.id===id); curTour=t; galIdx=0;
-  document.getElementById('galImgs').innerHTML=t.photos.map((p,i)=>`<img class="card__img modal__gallery-img${i===0?' active':''}" src="${p}" alt="${t.name}">`).join('');
+  const t=tours.find(x=>x.id===id);curTour=t;galIdx=0;
+  document.getElementById('galImgs').innerHTML=t.photos.map((p,i)=>`<img class="gal-img${i===0?' active':''}" src="${p}" alt="${t.name}">`).join('');
   document.getElementById('galDots').innerHTML=t.photos.map((_,i)=>`<div class="gal-dot${i===0?' active':''}" onclick="galGo(${i})"></div>`).join('');
   document.getElementById('galIdx').textContent='1';
   document.getElementById('galTotal').textContent=t.photos.length;
@@ -445,7 +307,7 @@ function openModal(id){
 function closeModal(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow='';}
 function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 function galMove(d){galIdx=(galIdx+d+curTour.photos.length)%curTour.photos.length;galGo(galIdx);}
-function galGo(i){galIdx=i;document.querySelectorAll('.modal__gallery-img').forEach((img,j)=>img.classList.toggle('active',j===i));document.querySelectorAll('.gal-dot').forEach((d,j)=>d.classList.toggle('active',j===i));document.getElementById('galIdx').textContent=i+1;}
+function galGo(i){galIdx=i;document.querySelectorAll('.gal-img').forEach((img,j)=>img.classList.toggle('active',j===i));document.querySelectorAll('.gal-dot').forEach((d,j)=>d.classList.toggle('active',j===i));document.getElementById('galIdx').textContent=i+1;}
 function chg(type,dir){const el=document.getElementById(type==='a'?'aNum':'cNum');let v=parseInt(el.textContent)+dir;if(type==='a'&&v<1)v=1;if(type==='c'&&v<0)v=0;el.textContent=v;calcTotal();}
 function calcTotal(){
   if(!curTour)return;
@@ -460,7 +322,10 @@ function calcTotal(){
   document.getElementById('bookTg').href=`https://t.me/${TG}?text=${msg}`;
 }
 
-renderCards();
+renderTours();
 </script>
+</body>
+</html>
+
 </body>
 </html>
