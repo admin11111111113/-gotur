@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOtur — Туры в Нячанг</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ocean: #006d8f;
+  --ocean-dark: #004d6e;
+  --sun: #ff8c42;
+  --sand: #fff8f0;
+  --dark: #0d2233;
+  --gray: #6b8a9a;
+  --light: #f0f6f9;
+  --white: #ffffff;
+  --radius: 16px;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: var(--sand);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #001f3f 0%, #006d8f 50%, #00a8c8 100%);
+}
+
+.hero__waves {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23fff8f0' d='M0,64L60,69.3C120,75,240,85,360,80C480,75,600,53,720,48C840,43,960,53,1080,64C1200,75,1320,85,1380,90.7L1440,96L1440,120L0,120Z'/%3E%3C/svg%3E") no-repeat bottom;
+  background-size: cover;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 40px 20px 160px;
+}
+
+.hero__logo {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 24px;
+}
+
+.hero__title {
+  font-size: clamp(44px, 8vw, 80px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+}
+
+.hero__title span { color: #ff8c42; }
+
+.hero__sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero__cta {
+  display: inline-block;
+  background: var(--sun);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(255,140,66,0.4);
+}
+.hero__cta:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,140,66,0.5); }
+
+.hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+.hero__stat-num { font-size: 32px; font-weight: 900; color: #fff; }
+.hero__stat-label { font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+
+/* SECTION */
+.section {
+  padding: 80px 20px;
+}
+.section--light { background: var(--light); }
+.section--white { background: var(--white); }
+
+.section__head {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 56px;
+}
+.section__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ocean);
+  margin-bottom: 12px;
+}
+.section__title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 900;
+  color: var(--dark);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+.section__desc {
+  margin-top: 12px;
+  color: var(--gray);
+  font-size: 16px;
+}
+
+/* CARDS GRID */
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+@media(max-width:900px){ .tours-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:580px){ .tours-grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  transition: transform 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.13); }
+.card--hot { border: 2.5px solid var(--sun); }
+
+.card__img-wrap { position: relative; overflow: hidden; }
+.card__img {
+  width: 100%; height: 210px;
+  object-fit: cover; display: block;
+  transition: transform 0.4s;
+}
+.card:hover .card__img { transform: scale(1.05); }
+
+.card__badge {
+  position: absolute; top: 12px; left: 12px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+.card__badge--hot { background: var(--sun); }
+
+.card__body {
+  padding: 18px 20px 20px;
+  display: flex; flex-direction: column; flex: 1;
+}
+.card__tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--ocean);
+  margin-bottom: 8px;
+}
+.card__name {
+  font-size: 16px; font-weight: 800;
+  color: var(--dark); line-height: 1.3;
+  margin-bottom: 8px;
+}
+.card__desc {
+  font-size: 13px; color: var(--gray);
+  line-height: 1.55; flex: 1;
+  margin-bottom: 16px;
+}
+.card__footer {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 8px;
+}
+.card__price { font-size: 16px; font-weight: 900; color: #e05500; }
+.card__price small { display: block; font-size: 11px; font-weight: 400; color: var(--gray); }
+.card__btn {
+  background: var(--ocean);
+  color: #fff; border: none;
+  border-radius: 25px;
+  padding: 9px 18px;
+  font-size: 13px; font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.card__btn:hover { background: var(--ocean-dark); }
+.card--hot .card__btn { background: var(--sun); }
+.card--hot .card__btn:hover { background: #e0722e; }
+
+/* WHY US */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media(max-width:800px){ .why-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:480px){ .why-grid { grid-template-columns: 1fr; } }
+
+.why-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.why-card__icon { font-size: 36px; margin-bottom: 12px; }
+.why-card__title { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+.why-card__text { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+/* CONTACT */
+.contact-block {
+  background: linear-gradient(135deg, var(--ocean-dark), var(--ocean));
+  border-radius: 24px;
+  padding: 56px 40px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  color: #fff;
+}
+.contact-block h2 { font-size: 32px; font-weight: 900; margin-bottom: 12px; }
+.contact-block p { color: rgba(255,255,255,0.8); font-size: 16px; margin-bottom: 32px; }
+.contact-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.contact-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 50px;
+  font-size: 15px; font-weight: 700;
+  text-decoration: none; transition: transform 0.2s;
+}
+.contact-btn:hover { transform: translateY(-2px); }
+.contact-btn--wa { background: #25D366; color: #fff; }
+.contact-btn--tg { background: #229ED9; color: #fff; }
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 32px 20px;
+  font-size: 13px;
+}
+footer strong { color: rgba(255,255,255,0.8); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__content">
+    <p class="hero__logo">GOtur · Нячанг, Вьетнам</p>
+    <h1 class="hero__title">Туры<br>в <span>Нячанг</span></h1>
+    <p class="hero__sub">Острова, дайвинг, джунгли и город — лучшие экскурсии прямо из отеля</p>
+    <a href="#tours" class="hero__cta">Смотреть все туры</a>
+    <div class="hero__stats">
+      <div><div class="hero__stat-num">20</div><div class="hero__stat-label">маршрутов</div></div>
+      <div><div class="hero__stat-num">5★</div><div class="hero__stat-label">рейтинг</div></div>
+      <div><div class="hero__stat-num">RU</div><div class="hero__stat-label">гид на русском</div></div>
+    </div>
+  </div>
+  <div class="hero__waves"></div>
+</section>
+
+<!-- WHY US -->
+<section class="section section--white">
+  <div class="section__head">
+    <p class="section__label">Почему мы</p>
+    <h2 class="section__title">Всё включено, никаких сюрпризов</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-card__icon">🇷🇺</div>
+      <div class="why-card__title">Гид на русском</div>
+      <div class="why-card__text">Встреча у отеля, сопровождение весь день</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card__icon">🍽️</div>
+      <div class="why-card__title">Обед включён</div>
+      <div class="why-card__text">Свежие морепродукты в каждом туре</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card__icon">🛡️</div>
+      <div class="why-card__title">Страховка</div>
+      <div class="why-card__text">Полная страховка на весь маршрут</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card__icon">💬</div>
+      <div class="why-card__title">Онлайн-бронь</div>
+      <div class="why-card__text">Ответим в WhatsApp за 5 минут</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOURS -->
+<section class="section section--light" id="tours">
+  <div class="section__head">
+    <p class="section__label">Каталог туров</p>
+    <h2 class="section__title">20 лучших маршрутов</h2>
+    <p class="section__desc">Острова, дайвинг, природа, город — на любой вкус и бюджет</p>
+  </div>
+
+  <div class="tours-grid">
+
+    <div class="card card--hot">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=420&fit=crop" alt="Морская прогулка на лодке Нячанг">
+        <span class="card__badge card__badge--hot">🔥 13 июня · Ближайший</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🛥️ Морская прогулка</div>
+        <h3 class="card__name">Прогулка на двухэтажной лодке</h3>
+        <p class="card__desc">Острова Хон Мот, Хон Там, Хон Мун · Снорклинг · Сап-борды · Рыбалка · Обед на борту · Музыка · 5 часов</p>
+        <div class="card__footer">
+          <div class="card__price">1.000.000 VND<small>для наших подписчиков</small></div>
+          <a class="card__btn" href="#contact">Забронировать</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=600&h=420&fit=crop" alt="3 острова снорклинг">
+        <span class="card__badge">🤿 Острова</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🤿 Острова</div>
+        <h3 class="card__name">3 острова + Снорклинг на катере</h3>
+        <p class="card__desc">Пляж Чань → Рыбацкая деревня (обед) → Пляж Сой · 08:00–15:30</p>
+        <div class="card__footer">
+          <div class="card__price">600.000 VND<small>ребёнок 420.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600&h=420&fit=crop" alt="VIP острова Хон Там">
+        <span class="card__badge">⭐ VIP</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">⭐ VIP</div>
+        <h3 class="card__name">VIP 3 острова + Хон Там</h3>
+        <p class="card__desc">Пляж Чань → Рыбацкая деревня → Курорт Хон Там · Грязевые ванны или пляж</p>
+        <div class="card__footer">
+          <div class="card__price">890.000 VND<small>ребёнок 623.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=420&fit=crop" alt="Остров Мун кораллы">
+        <span class="card__badge">🏝️ Заповедник</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🏝️ Заповедник</div>
+        <h3 class="card__name">3 острова — Остров Мун</h3>
+        <p class="card__desc">Морской заповедник с коралловыми рифами → Рыбацкая деревня → Пляж Чань</p>
+        <div class="card__footer">
+          <div class="card__price">650.000 VND<small>ребёнок 455.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=420&fit=crop" alt="Мини-бич Делюкс">
+        <span class="card__badge">🌊 Пляж</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🌊 Пляж</div>
+        <h3 class="card__name">Остров Мун Делюкс + Мини-бич</h3>
+        <p class="card__desc">Снорклинг на коралловых рифах + уединённый Мини-бич с шезлонгами</p>
+        <div class="card__footer">
+          <div class="card__price">700.000 VND<small>ребёнок 450.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=420&fit=crop" alt="VIP Хон Там курорт">
+        <span class="card__badge">⭐ VIP</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">⭐ VIP</div>
+        <h3 class="card__name">VIP Остров Мун + Хон Там</h3>
+        <p class="card__desc">Снорклинг у коралловых рифов + роскошный курорт Хон Там</p>
+        <div class="card__footer">
+          <div class="card__price">890.000 VND<small>ребёнок 700.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=420&fit=crop" alt="Мини-бич белый песок">
+        <span class="card__badge">🏖️ Пляж</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🏖️ Пляж</div>
+        <h3 class="card__name">Мини-бич Делюкс + Снорклинг</h3>
+        <p class="card__desc">Снорклинг у пляжа Чань + безлюдный Мини-бич с кристально чистой водой</p>
+        <div class="card__footer">
+          <div class="card__price">600.000 VND<small>ребёнок 300.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&h=420&fit=crop" alt="VIP Мини-бич">
+        <span class="card__badge">⭐ VIP</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">⭐ VIP</div>
+        <h3 class="card__name">VIP Мини-бич + Хон Там</h3>
+        <p class="card__desc">Бирюзовый Мини-бич + курорт Хон Там с минеральными ваннами</p>
+        <div class="card__footer">
+          <div class="card__price">890.000 VND<small>ребёнок 650.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&h=420&fit=crop" alt="Грязевые ванны Хон Там">
+        <span class="card__badge">🛁 Спа</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🛁 Спа</div>
+        <h3 class="card__name">Хон Там — Грязевые ванны + Пляж А</h3>
+        <p class="card__desc">Горячие минеральные ванны + бассейн + пляж А + шведский стол</p>
+        <div class="card__footer">
+          <div class="card__price">970.000 VND<small>ребёнок 695.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1501440267-4506e04e5e7f?w=600&h=420&fit=crop" alt="Шоу на Хон Там">
+        <span class="card__badge">🎵 Шоу</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🎵 Шоу</div>
+        <h3 class="card__name">Хон Там — Шоу + Шведский стол</h3>
+        <p class="card__desc">Пляж Б + живое музыкальное и танцевальное шоу + праздничный шведский стол</p>
+        <div class="card__footer">
+          <div class="card__price">930.000 VND<small>ребёнок 650.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=600&h=420&fit=crop" alt="Си-волкинг подводная прогулка">
+        <span class="card__badge">🚶 Под водой</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🚶 Под водой</div>
+        <h3 class="card__name">Си-Волкинг — Прогулка по дну моря</h3>
+        <p class="card__desc">Шлем для ходьбы по дну! Не нужно уметь плавать · 10–15 минут среди рыб и кораллов</p>
+        <div class="card__footer">
+          <div class="card__price">1.200.000 VND<small>взрослый и ребёнок</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&h=420&fit=crop" alt="Скуба дайвинг">
+        <span class="card__badge">🤿 Дайвинг</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🤿 Дайвинг</div>
+        <h3 class="card__name">Скуба Дайвинг — Погружение</h3>
+        <p class="card__desc">Погружение с аквалангом 10–15 минут среди ярких коралловых рифов Нячанга</p>
+        <div class="card__footer">
+          <div class="card__price">950.000 VND<small>взрослый и ребёнок</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=600&h=420&fit=crop" alt="3 острова дайвинг">
+        <span class="card__badge">🤿 Острова + Дайвинг</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🤿 Острова + Дайвинг</div>
+        <h3 class="card__name">3 острова + Скуба Дайвинг</h3>
+        <p class="card__desc">Три острова за один день + погружение с аквалангом с инструктором</p>
+        <div class="card__footer">
+          <div class="card__price">950.000 VND<small>ребёнок 665.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&h=420&fit=crop" alt="Пещера Хань Рай">
+        <span class="card__badge">🌿 Природа</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🌿 Природа</div>
+        <h3 class="card__name">Тур Хань Рай — Пещера Рай</h3>
+        <p class="card__desc">Пастбище овец → Залив Винь Хы → Пещера Хань Рай → Виноградный сад</p>
+        <div class="card__footer">
+          <div class="card__price">650.000 VND<small>ребёнок 455.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&h=420&fit=crop" alt="Остров Зьеп Сон">
+        <span class="card__badge">🌊 Острова</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🌊 Острова</div>
+        <h3 class="card__name">Остров Зьеп Сон + Пляж Зок Лет</h3>
+        <p class="card__desc">Уникальный «морской путь» при отливе + белоснежный пляж Зок Лет</p>
+        <div class="card__footer">
+          <div class="card__price">750.000 VND<small>ребёнок 525.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=420&fit=crop" alt="Сити тур Нячанг">
+        <span class="card__badge">🏛️ Экскурсия</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🏛️ Экскурсия</div>
+        <h3 class="card__name">Сити Тур Нячанг</h3>
+        <p class="card__desc">Океанариум · Пагода Лонг Шон · Башни Понагар · Хон Чонг · Каменная церковь</p>
+        <div class="card__footer">
+          <div class="card__price">650.000 VND<small>ребёнок 375.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1509233725247-49e657c54213?w=600&h=420&fit=crop" alt="Далат горы">
+        <span class="card__badge">🌸 Далат</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🌸 Далат</div>
+        <h3 class="card__name">Далат — Город Вечной Весны</h3>
+        <p class="card__desc">Водопад Датанла · Дворец Бао Дай · Сумасшедший дом · Пагода Линь Пыок</p>
+        <div class="card__footer">
+          <div class="card__price">890.000 VND<small>ребёнок 600.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1520454974749-a795a4355a7e?w=600&h=420&fit=crop" alt="Мини-бич однодневный">
+        <span class="card__badge">🏖️ Пляж</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🏖️ Пляж</div>
+        <h3 class="card__name">Мини-бич — Однодневный тур</h3>
+        <p class="card__desc">Уединённый пляж в открытом море · Кристально чистая вода · Обед с морепродуктами</p>
+        <div class="card__footer">
+          <div class="card__price">700.000 VND<small>ребёнок 500.000 · мин. 4 чел.</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&h=420&fit=crop" alt="Пастбище овец Нинь Тхуан">
+        <span class="card__badge">🐑 Природа</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🐑 Природа</div>
+        <h3 class="card__name">Пастбище овец + Залив Винь Хы</h3>
+        <p class="card__desc">Фото с белыми овечками → Залив с 300 видами кораллов (стеклодонная лодка) → Виноград</p>
+        <div class="card__footer">
+          <div class="card__price">840.000 VND<small>ребёнок 590.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card__img-wrap">
+        <img class="card__img" src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=600&h=420&fit=crop" alt="Залив Винь Хы стеклодонная лодка">
+        <span class="card__badge">🚢 Стеклодонная лодка</span>
+      </div>
+      <div class="card__body">
+        <div class="card__tag">🚢 Стеклодонная лодка</div>
+        <h3 class="card__name">Залив Винь Хы — Стеклодонная лодка</h3>
+        <p class="card__desc">200+ видов кораллов · Мыс Дельфина · Остров Черепахи · Виноградный сад</p>
+        <div class="card__footer">
+          <div class="card__price">750.000 VND<small>ребёнок 525.000</small></div>
+          <a class="card__btn" href="#contact">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section section--white" id="contact">
+  <div class="contact-block">
+    <h2>Забронировать тур</h2>
+    <p>Ответим в мессенджере за 5 минут. Встреча у вашего отеля, оплата на месте.</p>
+    <div class="contact-btns">
+      <a class="contact-btn contact-btn--wa" href="https://wa.me/84000000000">
+        💬 WhatsApp
+      </a>
+      <a class="contact-btn contact-btn--tg" href="https://t.me/gotur_nha_trang">
+        ✈️ Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>GOtur</strong> · Туры и экскурсии в Нячанге · Вьетнам<br>
+  <span style="font-size:11px;opacity:0.5;margin-top:6px;display:block">Все цены указаны в донгах VND · Для детей скидки</span>
+</footer>
+
+</body>
+</html>
