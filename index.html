@@ -84,31 +84,6 @@ body { font-family: Arial, sans-serif; background: var(--sand); color: var(--dar
 .why-card__title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 5px; }
 .why-card__text { font-size: 13px; color: var(--gray); line-height: 1.5; }
 
-/* ===== TOURS ===== */
-.tours-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; max-width: 1140px; margin: 0 auto; }
-@media(max-width:900px){ .tours-grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:560px){ .tours-grid { grid-template-columns: 1fr; } }
-.card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.07); transition: transform .25s, box-shadow .25s; display: flex; flex-direction: column; cursor: pointer; }
-.card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,.13); }
-.card--hot { border: 2.5px solid var(--sun); }
-.card__img-wrap { position: relative; overflow: hidden; }
-.card__img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform .4s; }
-.card:hover .card__img { transform: scale(1.05); }
-.card__badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(4px); }
-.card__badge--hot { background: var(--sun); }
-.card__body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
-.card__tag { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--ocean); margin-bottom: 5px; }
-.card__name { font-size: 15px; font-weight: 800; color: var(--dark); line-height: 1.3; margin-bottom: 5px; }
-.card__meta { font-size: 11px; color: var(--gray); margin-bottom: 8px; }
-.card__desc { font-size: 12px; color: var(--gray); line-height: 1.55; flex: 1; margin-bottom: 14px; }
-.card__footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
-.card__price { font-size: 15px; font-weight: 900; color: #e05500; }
-.card__price small { display: block; font-size: 11px; font-weight: 400; color: var(--gray); }
-.card__btn { background: var(--ocean); color: #fff; border: none; border-radius: 25px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s; }
-.card__btn:hover { background: var(--ocean-dark); }
-.card--hot .card__btn { background: var(--sun); }
-.card--hot .card__btn:hover { background: #e0722e; }
-
 /* ===== CONTACT ===== */
 .contact-block { background: linear-gradient(135deg,var(--ocean-dark),var(--ocean)); border-radius: 24px; padding: 52px 36px; text-align: center; max-width: 700px; margin: 0 auto; color: #fff; }
 .contact-block h2 { font-size: 30px; font-weight: 900; margin-bottom: 10px; }
@@ -193,6 +168,34 @@ footer strong { color: rgba(255,255,255,.75); }
   .modal__calc, .modal__book, .modal__social { padding-left: 14px; padding-right: 14px; }
   .modal__gallery { height: 220px; }
 }
+
+/* ===== TOURS MOSAIC ===== */
+.tours-mosaic { max-width: 1200px; margin: 0 auto; display: grid; gap: 10px; grid-template-columns: repeat(4,1fr); }
+.tour-tile { position: relative; overflow: hidden; border-radius: 12px; cursor: pointer; background: #1a3344; }
+.tour-tile:hover .tour-tile__img { transform: scale(1.07); }
+.tour-tile:hover .tour-tile__overlay { opacity: 1; }
+.tour-tile--big { grid-column: span 2; grid-row: span 2; }
+.tour-tile--wide { grid-column: span 2; }
+.tour-tile--tall { grid-row: span 2; }
+.tour-tile__img { width: 100%; height: 100%; min-height: 170px; object-fit: cover; display: block; transition: transform .4s ease; }
+.tour-tile--big .tour-tile__img { min-height: 360px; }
+.tour-tile--tall .tour-tile__img { min-height: 340px; }
+.tour-tile--wide .tour-tile__img { min-height: 185px; }
+.tour-tile__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.2) 55%, transparent 100%); opacity: .65; transition: opacity .3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; }
+.tour-tile__tag { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #ff8c42; margin-bottom: 4px; }
+.tour-tile__name { color: #fff; font-size: 14px; font-weight: 800; line-height: 1.2; text-shadow: 0 2px 6px rgba(0,0,0,.5); margin-bottom: 4px; }
+.tour-tile--big .tour-tile__name { font-size: 18px; }
+.tour-tile__price { color: #ffcc88; font-size: 13px; font-weight: 700; }
+.tour-tile__badge { position: absolute; top: 10px; left: 10px; background: #ff8c42; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.tour-tile__badge--hot { background: #ff4444; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+@media(max-width:700px) {
+  .tours-mosaic { grid-template-columns: repeat(2,1fr); }
+  .tour-tile--big { grid-column: span 2; grid-row: span 1; }
+  .tour-tile--wide { grid-column: span 2; }
+  .tour-tile--tall { grid-row: span 1; }
+  .tour-tile--big .tour-tile__img { min-height: 200px; }
+}
 </style>
 
 <!-- Yandex.Metrika counter -->
@@ -267,15 +270,17 @@ footer strong { color: rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- TOURS -->
+
+<!-- TOURS MOSAIC -->
 <section class="section section--light" id="tours">
   <div class="section__head">
     <p class="section__label">Каталог туров</p>
     <h2 class="section__title">20 маршрутов</h2>
-    <p class="section__desc">Острова, дайвинг, природа, город — на любой вкус и бюджет</p>
+    <p class="section__desc">Нажмите на тур — фото, программа, расчёт стоимости и связь</p>
   </div>
-  <div class="tours-grid" id="toursGrid"></div>
+  <div class="tours-mosaic" id="toursMosaic"></div>
 </section>
+
 
 <!-- CONTACT -->
 <section class="section section--white" id="contact">
@@ -395,25 +400,24 @@ const tours=[
 ];
 
 // ===== RENDER CARDS =====
+
 function renderCards(){
-  document.getElementById('toursGrid').innerHTML=tours.map(t=>`
-    <div class="card${t.hot?' card--hot':''}" onclick="openModal(${t.id})">
-      <div class="card__img-wrap">
-        <img class="card__img" src="${t.photos[0]}" alt="${t.name}" loading="lazy">
-        <span class="card__badge${t.hot?' card__badge--hot':''}">${t.hot?'🔥 13 июня · Ближайший':t.tag}</span>
+  const patterns = ['big','tall','normal','normal','wide','normal','normal','big','normal','normal','wide','normal','normal','tall','normal','wide','normal','normal','normal','normal'];
+  document.getElementById('toursMosaic').innerHTML = tours.map((t,i) => {
+    const pattern = patterns[i] || 'normal';
+    const cls = pattern !== 'normal' ? 'tour-tile--' + pattern : '';
+    return `<div class="tour-tile ${cls}" onclick="openModal(${t.id})">
+      <img class="tour-tile__img" src="${t.photos[0]}" alt="${t.name}" loading="lazy">
+      <div class="tour-tile__overlay">
+        <div class="tour-tile__tag">${t.tag}</div>
+        <div class="tour-tile__name">${t.name}</div>
+        <div class="tour-tile__price">от ${fmt(t.adultPrice)} VND</div>
       </div>
-      <div class="card__body">
-        <div class="card__tag">${t.tag}</div>
-        <h3 class="card__name">${t.name}</h3>
-        <div class="card__meta">⏱ ${t.time}</div>
-        <p class="card__desc">${t.route.replace(/<[^>]+>/g,'').replace('Маршрут:','').trim().substring(0,90)}...</p>
-        <div class="card__footer">
-          <div class="card__price">${fmt(t.adultPrice)} VND<small>ребёнок ${fmt(t.childPrice)}</small></div>
-          <button class="card__btn">Подробнее</button>
-        </div>
-      </div>
-    </div>`).join('');
+      ${t.hot ? '<div class="tour-tile__badge tour-tile__badge--hot">🔥 Ближайший</div>' : ''}
+    </div>`;
+  }).join('');
 }
+
 
 // ===== MODAL =====
 let curTour=null, galIdx=0;
